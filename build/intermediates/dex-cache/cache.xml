@@ -2,53 +2,67 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        is-multidex="false"
+        jar="/Users/dhanraj/.android/build-cache/71f1a62fe8491a0167dada1d964e2111438d9925/output/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
-        <dex dex="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.2.1_54869a57662e93991340058e9236dc8af44ba9da.jar" />
+        optimize="true"
+        revision="25.0.0"
+        sha1="2e1e80e5618ce24efaf884fec3cf6133ba2d6555">
+        <dex dex="/Users/dhanraj/Development/Android/workspace/Tess-two_example/app/build/intermediates/pre-dexed/debug/classes_c2f6013c3fe86309ee4d7d1f2cc2176759450306.jar" />
     </item>
     <item
-        jar="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        is-multidex="false"
+        jar="/Users/dhanraj/.android/build-cache/7fde1c4274ac7f725de19bf610e4530448c05469/output/jars/libs/internal_impl-23.0.1.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="673d77a5bbddd766037f088e775df525c46407f0">
-        <dex dex="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.2.1_9889bb0cf6d2f6a874baa2fdbb83253f6b0a138a.jar" />
+        optimize="true"
+        revision="25.0.0"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/dhanraj/Development/Android/workspace/Tess-two_example/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_57260a027344e198c5ac2fa720f3463e53a4d6f2.jar" />
     </item>
     <item
-        jar="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        is-multidex="false"
+        jar="/Users/dhanraj/.android/build-cache/84c6ff5802786cff08c10b71b9e7fcc61a6cc8e5/output/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
-        <dex dex="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.1_82c13618b2b4960af7b2724b45e8b36cc2487a56.jar" />
+        optimize="true"
+        revision="25.0.0"
+        sha1="bb0ac3f3ee2d71854501cc28e52cc84a20209b41">
+        <dex dex="/Users/dhanraj/Development/Android/workspace/Tess-two_example/app/build/intermediates/pre-dexed/debug/classes_4bfc7bc9766a0fe6b40b16e9964f94625362be27.jar" />
     </item>
     <item
-        jar="C:\Users\Iuliia\AppData\Local\Android\android-sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        is-multidex="false"
+        jar="/Users/dhanraj/.android/build-cache/7fde1c4274ac7f725de19bf610e4530448c05469/output/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
-        <dex dex="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.1_f46652fe59d39e06428d29ae911cc040dffc11eb.jar" />
+        optimize="true"
+        revision="25.0.0"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/dhanraj/Development/Android/workspace/Tess-two_example/app/build/intermediates/pre-dexed/debug/classes_8df16fea35187681c0e790323c2ae517a6239597.jar" />
     </item>
     <item
-        jar="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\exploded-aar\com.rmtheis\tess-two\5.4.1\jars\classes.jar"
+        is-multidex="false"
+        jar="/Users/dhanraj/.android/build-cache/84c6ff5802786cff08c10b71b9e7fcc61a6cc8e5/output/jars/libs/internal_impl-23.0.0.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="921b1c4306b10e7de53574523eb7f7144bd0707f">
-        <dex dex="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\pre-dexed\debug\com.rmtheis-tess-two-5.4.1_edc7a3887f98751be84a9b8f8550e5ef32f27f72.jar" />
+        optimize="true"
+        revision="25.0.0"
+        sha1="5d4bccb885c8a89d066ecb6c4addb553a99a79a2">
+        <dex dex="/Users/dhanraj/Development/Android/workspace/Tess-two_example/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.0_7211754971f982d2be2b822170b92f4e0f4a2986.jar" />
     </item>
     <item
-        jar="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        is-multidex="false"
+        jar="/Users/dhanraj/Development/Android/SDK/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
-        <dex dex="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.2.1_3d3b64feaf4214024d295c4be084576bcfc6fe09.jar" />
+        optimize="true"
+        revision="25.0.0"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/Users/dhanraj/Development/Android/workspace/Tess-two_example/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1_f2047cc6ca920a3be74a4e6effe4c2204b0236e6.jar" />
     </item>
     <item
-        jar="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        is-multidex="false"
+        jar="/Users/dhanraj/.android/build-cache/b29991599d136903dc957ad5ee9d8d4db3245b0c/output/jars/classes.jar"
         jumboMode="false"
-        revision="23.0.2"
-        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
-        <dex dex="C:\Users\Iuliia\Downloads\DisplayingBitmaps\TesseractSample\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.2.1_0f2b60097972c4ca8d355cf00cf87f657ed8a477.jar" />
+        optimize="true"
+        revision="25.0.0"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/dhanraj/Development/Android/workspace/Tess-two_example/app/build/intermediates/pre-dexed/debug/classes_9c699915d7390bdf137d0877811dab4e864d1ed9.jar" />
     </item>
 
 </items>

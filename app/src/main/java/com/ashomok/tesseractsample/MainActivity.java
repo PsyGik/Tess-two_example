@@ -2,14 +2,18 @@ package com.ashomok.tesseractsample;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -42,6 +46,9 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
 
     private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/TesseractSample/";
     private static final String TESSDATA = "tessdata";
+    private Bitmap bitmap;
+    private int ACTION_REQUEST_GALLERY = 11911;
+    private InputStream outputFileStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
         setContentView(R.layout.activity_main);
 
         Button captureImg = (Button) findViewById(R.id.action_btn);
+        Button pick = (Button) findViewById(R.id.action_pick_btn);
         if (captureImg != null) {
             captureImg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -57,6 +65,14 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                 }
             });
         }
+
+        pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImageFromGallery();
+            }
+        });
+
         textView = (TextView) findViewById(R.id.textResult);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -64,6 +80,14 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
         }
     }
 
+
+    private void pickImageFromGallery(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        Intent chooser = Intent.createChooser(intent, "Choose a Picture");
+        startActivityForResult(chooser, ACTION_REQUEST_GALLERY);
+    }
 
     /**
      * to get high resolution image from camera
@@ -76,7 +100,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
             String img_path = IMGS_PATH + "/ocr.jpg";
 
             outputFileUri = Uri.fromFile(new File(img_path));
-
+            Uri uri = outputFileUri;
             final Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
@@ -92,8 +116,18 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent data) {
         //making photo
+        Log.d(TAG, "onActivityResult: "+requestCode);
+        Log.d(TAG, "onActivityResult: "+resultCode);
         if (requestCode == PHOTO_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             doOCR();
+        }
+        else if(requestCode == ACTION_REQUEST_GALLERY && resultCode == Activity.RESULT_OK){
+            try {
+                outputFileUri = Uri.parse(FileUtils.getPath(this,data.getData()));
+                doOCR();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             Toast.makeText(this, "ERROR: Image was not obtained.", Toast.LENGTH_SHORT).show();
         }
@@ -101,9 +135,13 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
 
     private void doOCR() {
         prepareTesseract();
-        startOCR(outputFileUri);
+        new OCR().execute();
     }
 
+    private void doOCR2() {
+        prepareTesseract();
+        new OCR2().execute();
+    }
     /**
      * Prepare directory on external storage
      *
@@ -171,6 +209,102 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
         }
     }
 
+    void rotateIfRequired(Bitmap bitmap){
+        try {
+            ExifInterface exif = new ExifInterface(outputFileUri.getPath());
+            int exifOrientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+
+            Log.v(TAG, "Orient: " + exifOrientation);
+
+            int rotate = 0;
+
+            switch (exifOrientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotate = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotate = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotate = 270;
+                    break;
+            }
+
+            Log.v(TAG, "Rotation: " + rotate);
+
+            if (rotate != 0) {
+
+                // Getting width & height of the given image.
+                int w = bitmap.getWidth();
+                int h = bitmap.getHeight();
+
+                // Setting pre rotate
+                Matrix mtx = new Matrix();
+                mtx.postRotate(rotate);
+
+                // Rotating Bitmap
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, false);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class OCR extends AsyncTask<Void,Void,String>{
+
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Decoding");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return startOCR(outputFileUri);
+        }
+
+        @Override
+        protected void onPostExecute(String aVoid) {
+            super.onPostExecute(aVoid);
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+                textView.setText(aVoid);
+            }
+        }
+    }
+
+    public class OCR2 extends AsyncTask<Void, Void, String> {
+
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Decoding");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return startOCR(outputFileStream);
+        }
+
+        @Override
+        protected void onPostExecute(String aVoid) {
+            super.onPostExecute(aVoid);
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+                textView.setText(aVoid);
+            }
+        }
+    }
 
     /**
      * don't run this code in main thread - it stops UI thread. Create AsyncTask instead.
@@ -178,19 +312,31 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
      *
      * @param imgUri
      */
-    private void startOCR(Uri imgUri) {
+    private String startOCR(Uri imgUri) {
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
             Bitmap bitmap = BitmapFactory.decodeFile(imgUri.getPath(), options);
-
-            result = extractText(bitmap);
-
-            textView.setText(result);
-
+            return extractText(bitmap);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
+        return null;
+    }
+
+    /**
+     * What type of exception? Fuck if I know ¯\_(ツ)_/¯
+     */
+    private String startOCR(InputStream stream){
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4; // 1 - means max size. 4 - means maxsize/4 size. Don't use value <4, because you need more memory in the heap to store your data.
+            Bitmap bitmap = BitmapFactory.decodeStream(stream);
+            return extractText(bitmap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -228,7 +374,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
 
 
     private void requestPermissions() {
-        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
         requestTool = new RequestPermissionsToolImpl();
         requestTool.requestPermissions(this, permissions);
     }
